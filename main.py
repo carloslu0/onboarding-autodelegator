@@ -265,8 +265,18 @@ if button_pressed:
          
             # Display top 3 action items to Streamlit
             st.success('Top 3 action items successfully extracted!', icon="✅") 
-            st.write(top_items)           
+            st.write(top_items)
 
+            # Create a download button for the output
+            combined_items = action_items + "\n" + top_items
+
+            st.download_button(
+                label="Download as text file",
+                data=combined_items,
+                file_name='delegation_ideas.txt',
+                mime='text/plain',
+            )
+            
         else:
          st.warning("Please enter your client's name")     
     else:
