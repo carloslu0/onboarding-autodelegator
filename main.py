@@ -10,12 +10,12 @@ from dotenv import load_dotenv
 load_dotenv()
 ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
 
-#If dotenv doesn't work, adding this code in to access the API key via the secrets folder in Streamlit
+# If dotenv doesn't work, adding this code in to access the API key via the secrets folder in Streamlit
 # Set API Keys
 ANTHROPIC_API_KEY = st.secrets["ANTHROPIC_API_KEY"]
 
 # Functions
-def process_transcript(transcript, client_name, prompt_type):
+def process_transcript(prompt_type):
     anthropic = Anthropic()
     selected_prompt = ""
     if prompt_type == 'instruction':
@@ -136,7 +136,7 @@ if button_pressed:
         if client:
             instruction_progress_text = "Extracting action items from transcript. Please wait."
             instruction_bar = st.progress(0, text=instruction_progress_text)
-            action_items = process_transcript(transcript, client, 'instruction')
+            action_items = process_transcript('instruction')
             for percent_complete in range(100):
                 time.sleep(0.1)
                 instruction_bar.progress(percent_complete + 1, text=instruction_progress_text)
@@ -258,7 +258,7 @@ if button_pressed:
             """
             evaluate_progress_text = "Determining top 3 action items. Please wait."
             evaluate_bar = st.progress(0, text=evaluate_progress_text)        
-            top_items = process_transcript(transcript, client, 'evaluate')
+            top_items = process_transcript('evaluate')
             for percent_complete in range(100):
                 time.sleep(0.1)
                 evaluate_bar.progress(percent_complete + 1, text=evaluate_progress_text)
