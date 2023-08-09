@@ -308,7 +308,7 @@ if button_pressed:
             # Create a download button for the output
             combined_items = action_items + "\n" + top_items
 
-            col1, col2 = st.columns()
+            col1, col2 = st.columns(2)
 
             with col1:
 
