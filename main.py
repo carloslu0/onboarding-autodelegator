@@ -180,8 +180,6 @@ if button_pressed:
             
             # Display delegation ideas to Streamlit
             st.success('Delegation ideas successfully extracted!', icon="✅") 
-            st.write(action_items)
-
 
             # Prompt to analyze action items and determine the top 3 most important ones
             st.write("Analyzing and determing your top 3 action items...")
@@ -303,26 +301,29 @@ if button_pressed:
          
             # Display top 3 action items to Streamlit
             st.success('Top 3 action items successfully extracted!', icon="✅") 
-            st.write(top_items)
+
+            tab1, tab2 = st.tabs(["Delegation Ideas", "Top 3 Action Items"])
+
+            with tab1:
+                st.write(action_items)
+
+
+            with tab2:
+                st.write(top_items)
+
 
             # Create a download button for the output
             combined_items = action_items + "\n" + top_items
 
-            col1, col2 = st.columns(2)
-
-            with col1:
-
-                st.download_button(
-                    label="Download as text file",
-                    data=combined_items,
-                    file_name='delegation_ideas.txt',
-                    mime='text/plain',
-                )
+            st.download_button(
+                label="Download as text file",
+                data=combined_items,
+                file_name='delegation_ideas.txt',
+                mime='text/plain',
+            )
             
-            with col2:
-                
-                st.info('Downloading the text will refresh the page and restart the entire process.', icon="ℹ️")
-            
+            st.info('Downloading the text file will refresh this page', icon="🚨")
+
         else:
          st.warning("Please enter your client's name")     
     else:
