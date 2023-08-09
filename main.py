@@ -308,12 +308,20 @@ if button_pressed:
             # Create a download button for the output
             combined_items = action_items + "\n" + top_items
 
-            st.download_button(
-                label="Download as text file",
-                data=combined_items,
-                file_name='delegation_ideas.txt',
-                mime='text/plain',
-            )
+            col1, col2 = st.columns()
+
+            with col1:
+
+                st.download_button(
+                    label="Download as text file",
+                    data=combined_items,
+                    file_name='delegation_ideas.txt',
+                    mime='text/plain',
+                )
+            
+            with col2:
+                
+                st.info('Downloading the text will refresh the page and restart the entire process.', icon="ℹ️")
             
         else:
          st.warning("Please enter your client's name")     
