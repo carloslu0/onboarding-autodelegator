@@ -210,8 +210,8 @@ if button_pressed:
 
 
             <example>
-            #### Top 3 Action Items:
-            **ACTION ITEM:** Organize a list of people for Chris to talk to at Quiet Capital.
+            ### Top 3 Action Items:
+            #### **ACTION ITEM:** Organize a list of people for Chris to talk to at Quiet Capital.
   
             **BREAKDOWN OF STEPS:**
             1. Understand the purpose of the meetings with the people at "yes". What does "yes" refer to? Is it a company or an event? 
@@ -238,7 +238,7 @@ if button_pressed:
 
             ---
 
-            **ACTION ITEM:** Coordinate the meetings Chris has mentioned with other teams.
+            #### **ACTION ITEM:** Coordinate the meetings Chris has mentioned with other teams.
   
             **BREAKDOWN OF STEPS:**
             1. Obtain the list of teams that Chris wants to meet and the purpose of each meeting.
@@ -265,7 +265,7 @@ if button_pressed:
 
             ---
 
-            **ACTION ITEM:** Assist Chris in preparing and organizing information on the AI solutions.
+            #### **ACTION ITEM:** Assist Chris in preparing and organizing information on the AI solutions.
   
             **BREAKDOWN OF STEPS:**
             1. Understand the context of AI solutions that Chris is interested in.
