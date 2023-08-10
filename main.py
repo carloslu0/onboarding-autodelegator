@@ -2,7 +2,9 @@
 import os
 import time
 import streamlit as st
+from bs4 import BeautifulSoup
 from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+
 
 #Environment variables
 from dotenv import load_dotenv
@@ -95,71 +97,79 @@ if button_pressed:
         8. Categorize them further into the following sub-categories. If the main category is Personal: Physical Health, Mental Health, Relationships, Personal Finance, Learning / PKM, Passion Projects, Experiences/Travel, and Bucket List. If the category is work: Admin, Finance, People, Marketing, Sales, Product, Engineering, and Operations.
         9. Provide your reasoning as to why you assessed them that way. Base your answers on what you know about {client}. Limit this to 3-5 sentences. 
         10. The format of your overall response should look like what's shown between the example below. Make sure to follow the formatting and spacing exactly. Do not include the <example></example> XML tags in your final output. 
-        11. Generate at least 5 client action items, 5 EA action items, and 5 potential tasks.
+        11. Generate at least 5 client action item suggestions, 5 EA action item suggestions, and 5 other task suggestions.
 
         <example>
-        #### CLIENT ACTION ITEMS:
+        #### CLIENT ACTION ITEM SUGGESTIONS:
+
+        **High Impact**
         
         1. Review the spreadsheet and share insights with Daniel and the team
-            - Impact: High
             - Main area: Work
             - Sub-area: Product
             - Context: In the call, Client highlighted the importance of data-driven decision making to reach his goal of expanding our portfolio by 20% this year. This review will help identify potential opportunities to achieve this target.
         
         2. Collaborate on researching and understanding AI tools and their impact on venture capital firms
-            - Impact: High
             - Main area: Work
             - Sub-area: Operations
             - Context: Client expressed the need to stay at the forefront of technology trends, especially AI, due to an increasing number of tech-focused startups in our investment portfolio. This research collaboration aligns directly with that objective.
         
-        3. Contribute to designing a Google Doc to consolidate information on AI for venture capital firms
-            - Impact: Medium
+        3. Be prepared to discuss the topic with LPs, the team, and other stakeholders in the ecosystem
+            - Main area: Work
+            - Sub-area: People
+            - Context: Client emphasized the importance of keeping LPs informed about our strategic focus on AI. He also noted that clear communication with stakeholders could help attract more AI-focused startups.
+        
+        **Medium Impact**
+
+        1. Contribute to designing a Google Doc to consolidate information on AI for venture capital firms
             - Main area: Work
             - Sub-area: Product
             - Context: Client wants to ensure that the entire team is on the same page about AI trends in the VC industry. This shared Google Doc will help consolidate all the research, serving as a go-to resource for the team
         
-        4. Be prepared to discuss the topic with LPs, the team, and other stakeholders in the ecosystem
-            - Impact: High
-            - Main area: Work
-            - Sub-area: People
-            - Context: Client emphasized the importance of keeping LPs informed about our strategic focus on AI. He also noted that clear communication with stakeholders could help attract more AI-focused startups.
 
+        #### EA ACTION ITEM SUGGESTIONS:
 
-        #### EA ACTION ITEMS:
+        **High Impact**
+
         1. Assist client in researching AI tools and their impact on the venture capital industry
-            - Impact: High
             - Main area: Work
             - Sub-area: Product
-            - Context: Client mentioned in the transcript that he is focusing on improving a specific skill each quarter (currently AI and coding). One of his weekly goals is to also connect with VCs more. Being able to improve his expertise in AI and the VC industry should hit two birds with one stone. He can leverage his skillset with AI in providing value to VCs. 
-        2. Help gather and organize information in the Google Doc
-            - Impact: Medium
+            - Context: Client mentioned in the transcript that he is focusing on improving a specific skill each quarter (currently AI and coding). One of his weekly goals is to also connect with VCs more. Being able to improve his expertise in AI and the VC industry should hit two birds with one stone. He can leverage his skillset with AI in providing value to VCs.
+
+        2. Support client in coordinating meetings and discussions with stakeholders when necessary
+            - Main area: Work
+            - Sub-area: People
+            - Context: Client mentioned his tight schedule and the importance of efficient time management. Your support in organizing meetings will allow him to focus on strategic tasks and maintain productive relationships with stakeholders. 
+        
+        **Medium Impact**
+
+        1. Help gather and organize information in the Google Doc
             - Main area: Work
             - Sub-area: Admin
             - Context: During the call, Client stressed their preference for organized, easily accessible information. Assisting in managing this Google Doc will ensure he can quickly find the information they need.
-        3. Support client in coordinating meetings and discussions with stakeholders when necessary
-            - Impact: High
-            - Main area: Work
-            - Sub-area: People
-            - Context: Client mentioned his tight schedule and the importance of efficient time management. Your support in organizing meetings will allow him to focus on strategic tasks and maintain productive relationships with stakeholders.
+        
             
-        #### POTENTIAL TASKS:
-        1. Suggest to client to hold a workshop/validation session with relevant team members to explore AI tools and processes in their respective department
-            - Impact: Medium
-            - Main area: Work
-            - Sub-area: People
-            - Context: As client aims to create a company-wide understanding of AI's potential, this workshop could accelerate the learning process and ensure all teams are equipped to leverage AI in their work.
-        2. Recommend incorporating AI tools into each team's operations to streamline workflows and improve efficiency
-            - Impact: High
+        #### OTHER TASK SUGGESTIONS:
+
+        **High Impact**
+
+        1. Recommend incorporating AI tools into each team's operations to streamline workflows and improve efficiency
             - Main area: Work
             - Sub-area: Operations
             - Context: Client mentioned his goal of increasing operational efficiency by 15%. Recommending AI tool incorporation could be a strategic step towards achieving this.
-        3. Explore partnerships with AI solution providers specifically targeting venture capital firms or their portfolio companies to stay ahead in competition
-            - Impact: High
+        2. Explore partnerships with AI solution providers specifically targeting venture capital firms or their portfolio companies to stay ahead in competition
             - Main area: Work
             - Sub-area: Product
             - Context: In the call, client mentioned wanting to give our portfolio companies an edge through AI. Partnering with AI solution providers could be a key strategy in realizing this objective.
-        4. Keep an eye on competitors or other venture capital firms adopting AI technology and their success to gather case studies and examples for future presentations
-            - Impact: Medium
+
+        **Medium Impact**
+
+        1. Suggest to client to hold a workshop/validation session with relevant team members to explore AI tools and processes in their respective department
+            - Main area: Work
+            - Sub-area: People
+            - Context: As client aims to create a company-wide understanding of AI's potential, this workshop could accelerate the learning process and ensure all teams are equipped to leverage AI in their work.
+        
+        2. Keep an eye on competitors or other venture capital firms adopting AI technology and their success to gather case studies and examples for future presentations
             - Main area: Work
             - Sub-area: Product
             - Context: Client was keen on understanding the competitive landscape better. Monitoring competitors' AI adoption can provide useful insights for future strategy and presentations.
@@ -300,16 +310,24 @@ if button_pressed:
                 evaluate_bar.progress(percent_complete + 1, text=evaluate_progress_text)
          
             # Display top 3 action items to Streamlit
-            st.success('Top 3 action items successfully extracted!', icon="✅") 
+            st.success('Top 3 action items successfully extracted!', icon="✅")
+
+            # Parse the XML content using Beautiful Soup
+            soup = BeautifulSoup(action_items, 'lxml') # Using lxml as the parser 
+            cleaned_action_items = soup.get_text()
+
+            soup2 = BeautifulSoup(top_items, 'lxml') 
+            cleaned_top_items = soup2.get_text()
+
 
             tab1, tab2 = st.tabs(["Delegation Ideas", "Top 3 Action Items"])
 
             with tab1:
-                st.write(action_items)
+                st.write(cleaned_action_items)
 
 
             with tab2:
-                st.write(top_items)
+                st.write(cleaned_top_items)
 
 
             # Create a download button for the output
