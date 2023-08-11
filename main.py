@@ -205,7 +205,7 @@ if button_pressed:
             {transcript}
             </transcript>
 
-            Here is a list of Client Action Items, EA Action Items, and Potential Tasks that you created based on that call, in <action_items>/action_items> XML tags:
+            Here is a list of Client Action Item Suggestions, EA Action Item Suggestions, and Other Task Suggestions that you created based on that call, in <action_items>/action_items> XML tags:
 
             <action_items>
             {action_items}
