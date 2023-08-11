@@ -334,14 +334,14 @@ if button_pressed:
             combined_items = cleaned_action_items + "\n\n\n" + cleaned_top_items
 
             st.info('Downloading the file will refresh this page', icon="🚨")
-            st.download_button_txt(
+            st.download_button(
                 label="Download as .txt file",
                 data=combined_items,
                 file_name=f'{client}_delegation_ideas.txt',
                 mime='text/plain',
             )
 
-            st.download_button_md(
+            st.download_button(
                 label="Download as .md file",
                 data=combined_items,
                 file_name=f'{client}_delegation_ideas.md',
