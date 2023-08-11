@@ -62,14 +62,14 @@ client = st.text_input("What's the name of your client?")
 uploaded_file = st.file_uploader("Upload a transcript")
 
 # Add a button
-button_pressed = st.button("Process Transcript")
+button_pressed = st.button("Process transcript")
 
 # Execute this block if the button is pressed
 if button_pressed:
     if uploaded_file is not None:
         # Read the uploaded file into a string 
         bytes_data = uploaded_file.getvalue()
-        st.write("Uploading File....")
+        st.write("Uploading file....")
 
         # Call the function to process the transcript  
         transcript = bytes_data.decode()
@@ -331,16 +331,22 @@ if button_pressed:
 
 
             # Create a download button for the output
-            combined_items = action_items + "\n" + top_items
+            combined_items = cleaned_action_items + "\n\n\n" + cleaned_top_items
 
-            st.download_button(
-                label="Download as text file",
+            st.info('Downloading the file will refresh this page', icon="🚨")
+            st.download_button_txt(
+                label="Download as .txt file",
                 data=combined_items,
-                file_name='delegation_ideas.txt',
+                file_name=f'{client}_delegation_ideas.txt',
                 mime='text/plain',
             )
-            
-            st.info('Downloading the text file will refresh this page', icon="🚨")
+
+            st.download_button_md(
+                label="Download as .md file",
+                data=combined_items,
+                file_name=f'{client}_delegation_ideas.md',
+                mime='text/plain',
+            )
 
         else:
          st.warning("Please enter your client's name")     
